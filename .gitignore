@@ -49,3 +49,24 @@ Thumbs.db
 # Prisma / Database generated artifacts (except schema)
 server/prisma/*.db
 server/prisma/*.db-journal
+
+# Project Reports, Academic Documentation & Presentations
+ELEVAI_FINAL_PROJECT_REPORT.md
+ElevAI_Final_Technical_Documentation.md
+ElevAI_Research_Paper.md
+ELEVAI_FINAL_PROJECT_REPORT.pdf
+ElevAI_Final_Project_Presentation.pdf
+ElevAI_Final_Project_Presentation.pptx
+ElevAI_Final_Technical_Documentation.pdf
+ElevAI_Research_Paper_and_Backend_Workflow.pdf
+ElevAI_Simple_Viva_Questions_and_Answers.pdf
+ElevAI_Viva_and_Technical_Defense_Questionnaire.pdf
+generate_pdf.js
+
+# Document generation & presentation outputs
+*.pdf
+*.pptx
+*.docx
+
+# Ensure project README is always tracked
+!README.md
