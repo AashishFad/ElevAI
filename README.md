@@ -20,12 +20,12 @@
   </p>
 
   <p align="center">
+    <a href="#-application-previews">Application Previews</a> •
     <a href="#-key-features">Key Features</a> •
     <a href="#-system-architecture">Architecture</a> •
     <a href="#-tech-stack">Tech Stack</a> •
-    <a href="#-project-structure">Project Structure</a> •
     <a href="#-quick-start">Quick Start</a> •
-    <a href="#-environment-variables">Configuration</a> •
+    <a href="#-deployment-guide-render">Deployment</a> •
     <a href="#-api-reference">API Reference</a>
   </p>
 
@@ -48,15 +48,81 @@ Traditional recruitment platforms suffer from two major disconnects:
 
 ---
 
-## ✨ Key Features
+## 📸 Application Previews
 
 ### 🎓 Candidate Experience
-- **Interactive Role Onboarding**: Choose between Candidate and Recruiter during registration and login, automatically configuring appropriate dashboards.
+
+#### 1. Candidate Command Dashboard
+The central hub for job seekers, featuring personalized greetings, target role benchmarks, active job recommendations, resume vault shortcuts, and one-click AI resume analysis.
+
+<p align="center">
+  <img src="docs/assets/candidate_dashboard.png" alt="Candidate Dashboard" width="95%" />
+</p>
+
+#### 2. Candidate Job Market Feed
+Live job feed with multi-filter search (Work Mode, Employment Type, Technology keywords), compensation transparency, and direct role inspection.
+
+<p align="center">
+  <img src="docs/assets/candidate_jobs_feed.png" alt="Candidate Job Market Feed" width="95%" />
+</p>
+
+#### 3. AI Mock Interview Calibration
+Interactive interview setup calibrated to the candidate's career goals and experience level. Supports **Technical Deep-Dive**, **Behavioral & Leadership**, and **Comprehensive Mixed** interview formats powered by local `qwen2.5:7b`.
+
+<p align="center">
+  <img src="docs/assets/candidate_mock_interview_setup.png" alt="AI Mock Interview Calibration" width="95%" />
+</p>
+
+---
+
+### 💼 Recruiter & Admin Workspace
+
+#### 4. Recruiter Command Hub & Live Telemetry
+Comprehensive recruitment analytics showcasing platform user counts, active jobs, application volume, candidate pipeline conversion funnels, and real-time PostgreSQL telemetry.
+
+<p align="center">
+  <img src="docs/assets/recruiter_dashboard_overview.png" alt="Recruiter Command Hub" width="95%" />
+</p>
+
+#### 5. Conversion Funnel & Skill Demand Analytics
+Real-time tracking of candidate stage progression (`Applications Received` $\to$ `Under Review` $\to$ `Shortlisted` $\to$ `Interview` $\to$ `Selected`) paired with structured skill demand rankings across active requisitions.
+
+<p align="center">
+  <img src="docs/assets/recruiter_analytics_funnel.png" alt="Conversion Funnel and Skill Demand" width="95%" />
+</p>
+
+#### 6. Requisition Performance & Candidate Breakdown
+Granular requisition breakdown highlighting total applicants per job, stage-by-stage counts, average candidate ATS match percentages, and requisition deadlines.
+
+<p align="center">
+  <img src="docs/assets/recruiter_requisition_table.png" alt="Requisition Performance Breakdown" width="95%" />
+</p>
+
+#### 7. Job Requisitions Management
+Complete requisition lifecycle management: create, publish, filter by status (`Published`, `Drafts`, `Closed`), and view linked candidate applicant pools.
+
+<p align="center">
+  <img src="docs/assets/admin_jobs_management.png" alt="Admin Job Management" width="95%" />
+</p>
+
+#### 8. Candidate Applications Review Pipeline
+Recruiter evaluation board for inspecting applicant dossiers, reviewing match scores, downloading resumes, and advancing candidates through hiring stages.
+
+<p align="center">
+  <img src="docs/assets/admin_applications_review.png" alt="Candidate Applications Review" width="95%" />
+</p>
+
+---
+
+## ✨ Key Features
+
+### 🎓 Candidate Suite
+- **Interactive Role Onboarding**: Two-step registration and login with explicit persona selection (Candidate vs Recruiter).
 - **AI-Powered Resume Analysis**:
   - Secure document upload (`PDF`, `DOCX`) with automated text extraction.
   - Multi-dimensional scoring: ATS Compatibility Score, Job Alignment Score, Experience Fit, and Education Evaluation.
   - Skill breakdown: Extracted Skills, Matched Skills, and Missing Critical Competencies.
-  - Bullet-by-bullet actionable recommendations.
+  - Actionable recommendations with bullet revisions.
 - **Interactive AI Mock Interviewer**:
   - Practice Technical, HR/Behavioral, or Mixed interview rounds across Beginner, Intermediate, and Advanced difficulty levels.
   - Real-time scoring on technical accuracy, conceptual relevance, and communication clarity.
@@ -66,7 +132,7 @@ Traditional recruitment platforms suffer from two major disconnects:
   - Submit applications instantly attaching a selected resume and computed match score.
   - Live tracking of application status: `SUBMITTED` $\to$ `UNDER_REVIEW` $\to$ `SHORTLISTED` $\to$ `INTERVIEW` $\to$ `SELECTED` / `REJECTED`.
 
-### 💼 Recruiter & Admin Workspace
+### 💼 Recruiter Suite
 - **Job Requisition Management**: Create, edit, publish, draft, or close job openings with detailed requirements and skill tags.
 - **Candidate Dossier & Resume Viewer**:
   - Inspect candidate applications with pre-computed AI match scores and application dates.
@@ -149,51 +215,36 @@ Traditional recruitment platforms suffer from two major disconnects:
 ```text
 ElevAI/
 ├── client/                          # React Frontend Application
-│   ├── public/                      # Static assets & favicon
+│   ├── public/                      # Static assets & logo
 │   ├── src/
-│   │   ├── components/              # Reusable UI & Layout components
-│   │   │   ├── application/         # Application modals & cards
-│   │   │   ├── common/              # Navbar, Footer, ProtectedRoute, AdminRoute
-│   │   │   ├── layout/              # Sidebar & Topbar navigations
-│   │   │   └── ui/                  # GlassCard, GradientButton, AIOrb, Alerts
-│   │   ├── context/                 # AuthContext & global state providers
-│   │   ├── hooks/                   # Custom React hooks (useAuth, etc.)
+│   │   ├── components/              # UI, layout & modal components
+│   │   ├── context/                 # AuthContext & global state
+│   │   ├── hooks/                   # Custom hooks (useAuth)
 │   │   ├── layouts/                 # RootLayout, DashboardLayout, AdminLayout
-│   │   ├── pages/                   # Application views
-│   │   │   ├── admin/               # Recruiter views (Jobs, Applications, Detail)
-│   │   │   ├── DashboardPage.jsx    # Candidate primary hub
-│   │   │   ├── JobsFeedPage.jsx     # Job search & filter feed
-│   │   │   ├── LoginPage.jsx        # Dual-role Login portal
-│   │   │   ├── RegisterPage.jsx     # Dual-role Register portal
-│   │   │   ├── MockInterviewSessionPage.jsx # Interactive interview room
-│   │   │   └── ResumeUploadPage.jsx # Resume upload & AI scoring
+│   │   ├── pages/                   # Application views & admin pages
 │   │   ├── services/                # Axios API client & endpoints
-│   │   └── App.jsx                  # Application routing & tree setup
-│   ├── package.json
-│   └── vite.config.js
+│   │   └── App.jsx                  # Application routing setup
+│   └── package.json
 │
 ├── server/                          # Node.js + Express Backend
 │   ├── prisma/
 │   │   └── schema.prisma            # Database schema definitions & enums
-│   ├── scripts/                     # Verification & testing scripts
 │   ├── src/
-│   │   ├── ai/                      # Ollama & AI engine integration
-│   │   │   ├── aiService.js         # Prompt orchestration & model calls
-│   │   │   └── geminiService.js     # Auxiliary AI engine
-│   │   ├── config/                  # Environment, database & Supabase clients
-│   │   ├── controllers/             # Request handlers (Auth, Job, Resume, Admin)
-│   │   ├── middleware/              # Auth, RBAC, error handlers & validators
+│   │   ├── ai/                      # Ollama & centralized AI engine
+│   │   ├── config/                  # Database, environment & storage config
+│   │   ├── controllers/             # Auth, Job, Resume, Admin controllers
+│   │   ├── middleware/              # Auth, RBAC & error handlers
 │   │   ├── routes/                  # Express API routers
-│   │   ├── services/                # Core business logic & database operations
-│   │   ├── utils/                   # JWT generation & verification
-│   │   ├── validators/              # Payload input sanitizers
-│   │   ├── app.js                   # Express application setup
-│   │   └── server.js                # Server entry point
+│   │   ├── services/                # Business logic & database operations
+│   │   └── app.js                   # Unified Express app (API + Static SPA)
 │   └── package.json
 │
+├── docs/
+│   └── assets/                      # Application preview screenshots
 ├── .env.example                     # Root environment template
 ├── .gitignore                       # Clean Git tracking configuration
-├── render.yaml                      # Cloud deployment configuration
+├── render.yaml                      # Unified cloud deployment configuration
+├── package.json                     # Monorepo build and start scripts
 └── README.md                        # Master project documentation
 ```
 
@@ -262,27 +313,35 @@ npm run dev
 
 ---
 
-## ⚙️ Environment Variables
+## 🌐 Deployment Guide (Render)
 
-### Backend Configuration (`server/.env`)
-| Variable | Description | Example / Default |
-| :--- | :--- | :--- |
-| `PORT` | Backend listening port | `5000` |
-| `NODE_ENV` | Runtime environment | `development` or `production` |
-| `DATABASE_URL` | Supabase / PostgreSQL pooled connection string | `postgresql://postgres:[PASSWORD]@[REF].supabase.co:5432/postgres?pgbouncer=true` |
-| `DIRECT_URL` | Supabase / PostgreSQL direct connection string | `postgresql://postgres:[PASSWORD]@[REF].supabase.co:5432/postgres` |
-| `JWT_SECRET` | Secret key for signing authentication tokens | Strong 64-character random string |
-| `JWT_EXPIRES_IN`| Token lifespan | `7d` |
-| `OLLAMA_BASE_URL`| Local Ollama API host | `http://localhost:11434` |
-| `OLLAMA_MODEL` | Ollama model identifier | `qwen2.5:7b` |
-| `SUPABASE_URL` | Supabase Project URL | `https://[PROJECT_REF].supabase.co` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service key for private resume storage | `your_supabase_service_role_key` |
-| `CLIENT_URL` | Allowed frontend origin for CORS | `http://localhost:5173` |
+ElevAI is pre-configured for **Single-Service Full-Stack Deployment**. A single web service builds the frontend and runs the backend, providing **one clean URL** (e.g. `https://elevai.onrender.com`) for both the web application and API.
 
-### Frontend Configuration (`client/.env`)
-| Variable | Description | Example / Default |
+### Render Dashboard Deployment Steps
+
+1. Log in to [dashboard.render.com](https://dashboard.render.com) and click **New +** $\to$ **Web Service**.
+2. Connect your **ElevAI** GitHub repository.
+3. Configure the service settings:
+   - **Name**: `elevai` *(or your custom name)*
+   - **Runtime**: `Node`
+   - **Branch**: `main`
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`
+   - **Instance Type**: `Free`
+4. Add the following **Environment Variables**:
+
+| Variable | Recommended Value | Source |
 | :--- | :--- | :--- |
-| `VITE_API_BASE_URL` | Base endpoint for Express API | `http://localhost:5000/api` |
+| `NODE_ENV` | `production` | Literal |
+| `PORT` | `10000` | Literal |
+| `DATABASE_URL` | `postgresql://...` | Supabase Dashboard $\to$ Settings $\to$ Database (Pooled) |
+| `DIRECT_URL` | `postgresql://...` | Supabase Dashboard $\to$ Settings $\to$ Database (Direct) |
+| `JWT_SECRET` | *(Random 32+ character string)* | Security secret |
+| `SUPABASE_URL` | `https://[REF].supabase.co` | Supabase Dashboard $\to$ Settings $\to$ API |
+| `SUPABASE_SERVICE_ROLE_KEY` | `eyJ...` | Supabase Dashboard $\to$ Settings $\to$ API (`service_role`) |
+| `MAX_FILE_SIZE_MB` | `5` | Literal |
+
+5. Click **Deploy Web Service**. Render will build the client, initialize Prisma, and host your entire application under a single live link!
 
 ---
 
