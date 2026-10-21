@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 const apiRoutes = require('./routes');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
@@ -62,18 +64,33 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Basic root route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to ElevAI Backend API',
-    health: '/api/health',
-  });
-});
-
 // Centralized API routing structure
 app.use('/api', apiRoutes);
 
-// 404 Handler
+// In production, serve the built React frontend if client/dist exists
+// This enables a SINGLE UNIFIED URL for both Frontend and Backend
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+
+  // Client-side SPA routing fallback (catch all non-API GET requests)
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+} else {
+  // Standalone API mode fallback
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Welcome to ElevAI Backend API',
+      health: '/api/health',
+    });
+  });
+}
+
+// 404 Handler for unmatched API routes
 app.use(notFoundHandler);
 
 // Centralized Error Handling Middleware

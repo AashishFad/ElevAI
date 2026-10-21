@@ -1,0 +1,15 @@
+{
+  "name": "elevai",
+  "version": "1.0.0",
+  "description": "ElevAI - AI-Powered Smart Interview & Career Preparation Portal",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix client install && npm --prefix client run build && npm --prefix server install && npm --prefix server run prisma:generate",
+    "start": "node server/src/server.js",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
